@@ -38,13 +38,13 @@ if response.status_code == 200 or \
                     base_url + '/networks/' + item + '/events?productType=wireless&includedEventTypes[]=association&perPage=100', #wireless client association
                     headers=headers)
         with open((os.path.join('/var/log/meraki/association/' + item + '.txt')), 'wt') as file:
-            json.dump(assocData.json(), file)
+            json.dump(assocData.json()['events'], file)
 
         authData = requests.get(
                     base_url + '/networks/' + item + '/events?productType=wireless&includedEventTypes[]=8021x_auth&perPage=100', #wireless client authentication
                     headers=headers)
         with open((os.path.join('/var/log/meraki/wireless_authentication/' + item + '.txt')), 'wt') as file:
-            json.dump(authData.json(), file)
+            json.dump(authData.json()['events'], file)
 else:
     print(json.dumps(response.status_code, indent=4, sort_keys=True))
 
